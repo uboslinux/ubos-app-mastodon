@@ -1,0 +1,15 @@
+[Unit]
+Description=mastodon-sidekiq
+After=network.target
+
+[Service]
+Type=simple
+User=mastodon
+WorkingDirectory=/var/lib/mastodon/%i/mastodon
+EnvironmentFile=/etc/mastodon/mastodon-sidekiq-%i.env
+ExecStart=/usr/bin/bundle exec sidekiq -c 5 -q default -q mailers -q pull -q push
+TimeoutSec=15
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

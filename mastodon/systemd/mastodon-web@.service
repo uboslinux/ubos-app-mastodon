@@ -1,0 +1,15 @@
+[Unit]
+Description=mastodon-web
+After=network.target
+
+[Service]
+Type=simple
+User=mastodon
+WorkingDirectory=/var/lib/mastodon/%i/mastodon
+EnvironmentFile=/etc/mastodon/mastodon-web-%i.env
+ExecStart=/usr/bin/bundle exec puma -C config/puma.rb
+TimeoutSec=15
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

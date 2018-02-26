@@ -1,0 +1,18 @@
+ProxyPreserveHost On
+
+ProxyPass ${appconfig.context}/api/v1/streaming http://127.0.0.1:${appconfig.tcpport.mastodon-streaming}/
+ProxyPass ${appconfig.context}/ http://127.0.0.1:${appconfig.tcpport.mastodon-web}/
+ProxyPassReverse ${appconfig.context}/ http://127.0.0.1:${appconfig.tcpport.mastodon-web}/
+
+Header set Strict-Transport-Security "max-age=31536000"
+
+<LocationMatch "^/(emoji|packs|system/accounts/avatars|system/media_attachments/files)">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+</LocationMatch>
+
+<LocationMatch "^/sw\.js$">
+    Header set Cache-Control "public, max-age=0"
+</LocationMatch>
+
+RequestHeader add Host ${site.hostname}
+RequestHeader add X-Forwarded-Proto https

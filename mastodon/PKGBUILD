@@ -1,0 +1,83 @@
+developer=https://github.com/tootsuite/mastodon
+url=${developer}
+maintainer=http://indiecomputing.com/
+pkgname=$(basename $(pwd))
+pkgver=2.2.0
+pkgrel=1
+pkgdesc="Decentralized microblogging"
+arch=('any')
+license=("AGPL3")
+source=("${pkgname}-${pkgver}::git+https://github.com/tootsuite/mastodon.git#tag=v${pkgver}")
+releasepage=('https://github.com/tootsuite/mastodon/releases')
+depends=(
+    'ffmpeg'
+    'imagemagick'
+    'libpqxx'
+    'libxml2'
+    'libxslt'
+    'nodejs'
+    'protobuf-c'
+    'redis'
+    'ubos-rails-support'
+)
+makedepends=(
+    'yarn'
+    'npm'
+)
+options=('!strip')
+sha512sums=('SKIP')
+install=install
+
+build() {
+    cd ${srcdir}/${pkgname}-${pkgver}
+
+    echo Running bundle install
+    bundle install -j$(getconf _NPROCESSORS_ONLN) --deployment --without development test
+
+    echo Running yarn install
+    yarn install --pure-lockfile
+
+    # We need this here otherwise asset precompilation fails. However, we need to
+    # change this before deploying to something instance-specific
+    deviseSecretKey=$(perl -MUBOS::Utils -e 'print UBOS::Utils::randomHex(64);')
+    perl -pi -e "s!^(\s*)#\s*(config\.secret_key\s*=\s*).*\$!\1\2'$deviseSecretKey'!" config/initializers/devise.rb
+
+    echo Running bundle exec
+    RAILS_ENV=production bundle exec rails assets:precompile
+
+    # Make a few changes
+    perl -pi -e "s!cache_dir:.*\$!cache_dir: '/var/cache/' + ENV['APPCONFIGID'],!" config/boot.rb
+}
+
+package() {
+# Manifest
+    mkdir -p ${pkgdir}/var/lib/ubos/manifests
+    install -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/var/lib/ubos/manifests/${pkgname}.json
+
+# Icons
+#    mkdir -p ${pkgdir}/srv/http/_appicons/$pkgname
+#    install -m644 ${startdir}/appicons/{72x72,144x144}.png ${pkgdir}/srv/http/_appicons/$pkgname/
+
+# Templates
+    install -D -m 644 ${startdir}/tmpl/*.tmpl -t ${pkgdir}/usr/share/${pkgname}/tmpl/
+
+# Config files
+    mkdir -p ${pkgdir}/etc/${pkgname}
+
+# Systemd
+    install -D -m 644 ${startdir}/systemd/*.{service,target} -t ${pkgdir}/usr/lib/systemd/system/
+    install -D -m 644 ${startdir}/etc/sysusers.d/mastodon.conf -t ${pkgdir}/etc/sysusers.d/
+
+# Data
+    mkdir -p ${pkgdir}/var/lib/${pkgname}
+
+# Cache
+    mkdir -p ${pkgdir}/var/cache/mastodon
+
+# Code
+    mkdir -p ${pkgdir}/usr/share/${pkgname}/bin
+    install -m755 ${startdir}/bin/* -t ${pkgdir}/usr/share/${pkgname}/bin/
+    mkdir -p ${pkgdir}/usr/share/${pkgname}/mastodon
+    cp -a ${srcdir}/${pkgname}-${pkgver}/* ${pkgdir}/usr/share/${pkgname}/mastodon/
+    cp -a ${srcdir}/${pkgname}-${pkgver}/.bundle ${pkgdir}/usr/share/${pkgname}/mastodon/
+}

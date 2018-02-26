@@ -1,0 +1,197 @@
+{
+    "type" : "app",
+
+    "roles" : {
+        "apache2" : {
+            "fixedcontext" : "",
+            "depends" : [
+                "npm"
+            ],
+            "apache2modules" : [
+                "headers",
+                "proxy",
+                "proxy_http",
+                "remoteip"
+            ],
+            "appconfigitems" : [
+                {
+                    "type"             : "tcpport",
+                    "name"             : "redis"
+                },
+                {
+                    "type"             : "tcpport",
+                    "name"             : "mastodon-web"
+                },
+                {
+                    "type"             : "tcpport",
+                    "name"             : "mastodon-streaming"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "/etc/mastodon/mastodon-sidekiq-${appconfig.appconfigid}.env",
+                    "template"         : "tmpl/mastodon-sidekiq.env.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "/etc/mastodon/mastodon-streaming-${appconfig.appconfigid}.env",
+                    "template"         : "tmpl/mastodon-streaming.env.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "/etc/mastodon/mastodon-web-${appconfig.appconfigid}.env",
+                    "template"         : "tmpl/mastodon-web.env.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "/etc/mastodon/mastodon-redis-${appconfig.appconfigid}.conf",
+                    "template"         : "tmpl/mastodon-redis.conf.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "/etc/ubos/open-ports.d/mastodon-${appconfig.appconfigid}",
+                    "template"         : "tmpl/open-ports.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "${appconfig.apache2.appconfigfragmentfile}",
+                    "template"         : "tmpl/htaccess.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"             : "directory",
+                    "names"            : [
+                        "${appconfig.datadir}",
+                        "${appconfig.datadir}/mastodon",
+                        "${appconfig.datadir}/redis"
+                    ]
+                },
+                {
+                    "type"             : "directory",
+                    "name"             : "${appconfig.cachedir}",
+                    "uname"            : "mastodon",
+                    "gname"            : "mastodon"
+                },
+                {
+                    "type"             : "directorytree",
+                    "filepermissions"  : "preserve",
+                    "dirpermissions"   : "preserve",
+                    "names"            : [
+                        "${appconfig.datadir}/mastodon/.bundle",
+                        "${appconfig.datadir}/mastodon/app",
+                        "${appconfig.datadir}/mastodon/bin",
+                        "${appconfig.datadir}/mastodon/build",
+                        "${appconfig.datadir}/mastodon/config",
+                        "${appconfig.datadir}/mastodon/config.ru",
+                        "${appconfig.datadir}/mastodon/db",
+                        "${appconfig.datadir}/mastodon/Gemfile",
+                        "${appconfig.datadir}/mastodon/Gemfile.lock",
+                        "${appconfig.datadir}/mastodon/lib",
+                        "${appconfig.datadir}/mastodon/log",
+                        "${appconfig.datadir}/mastodon/node_modules",
+                        "${appconfig.datadir}/mastodon/package.json",
+                        "${appconfig.datadir}/mastodon/public",
+                        "${appconfig.datadir}/mastodon/Rakefile",
+                        "${appconfig.datadir}/mastodon/spec",
+                        "${appconfig.datadir}/mastodon/streaming",
+                        "${appconfig.datadir}/mastodon/tmp",
+                        "${appconfig.datadir}/mastodon/vendor",
+                        "${appconfig.datadir}/mastodon/yarn.lock"
+                    ],
+                    "source" : "mastodon/$2"
+                },
+                {
+                    "type"             : "file",
+                    "name"             : "${appconfig.datadir}/mastodon/.env.production",
+                    "template"         : "tmpl/production.env.tmpl",
+                    "templatelang"     : "varsubst"
+                },
+                {
+                    "type"         : "systemd-service",
+                    "name"         : "mastodon-redis@${appconfig.appconfigid}",
+                },
+                {
+                    "type"         : "systemd-service",
+                    "name"         : "mastodon-web@${appconfig.appconfigid}",
+                },
+                {
+                    "type"         : "systemd-service",
+                    "name"         : "mastodon-sidekiq@${appconfig.appconfigid}",
+                },
+                {
+                    "type"         : "systemd-service",
+                    "name"         : "mastodon-streaming@${appconfig.appconfigid}",
+                }
+            ]
+        },
+        "postgresql" : {
+            "appconfigitems" : [
+                {
+                    "type"             : "database",
+                    "name"             : "maindb",
+                    "retentionpolicy"  : "keep",
+                    "retentionbucket"  : "maindb",
+                    "privileges"       : "*"
+                }
+            ],
+            "installers" : [
+                {
+                    "type"   : "perlscript",
+                    "name"   : "maindb",
+                    "source" : "bin/db-migrate.pl"
+                }
+            ],
+            "upgraders" : [
+                {
+                    "type"   : "perlscript",
+                    "name"   : "maindb",
+                    "source" : "bin/db-migrate.pl"
+                }
+            ]
+        }
+    },
+    "customizationpoints" : {
+        "singleusermode" : {
+            "type"        : "boolean",
+            "required"    : false,
+            "default" : {
+                "value" : true
+            }
+        },
+        "defaultlocale" : {
+            "type"        : "string",
+            "required"    : false,
+            "default" : {
+                "value" : "en"
+            }
+        },
+        "paperclip_secret" : {
+            "type"        : "password",
+            "required"    : false,
+            "private"     : true,
+            "default" : {
+                "expression" : "${randomHex(128)}"
+            }
+        },
+        "secret_key_base" : {
+            "type"        : "password",
+            "required"    : false,
+            "private"     : true,
+            "default" : {
+                "expression" : "${randomHex(128)}"
+            }
+        },
+        "otp_secret" : {
+            "type"        : "password",
+            "required"    : false,
+            "private"     : true,
+            "default" : {
+                "expression" : "${randomHex(128)}"
+            }
+        }
+    }
+}
