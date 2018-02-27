@@ -1,3 +1,26 @@
+ProxyPass /500.html !
+ProxyPass /android-chrome-192x192.png !
+ProxyPass /apple-touch-icon.png !
+ProxyPass /assets !
+ProxyPass /avatars !
+ProxyPass /badge.png !
+ProxyPass /browserconfig.xml !
+ProxyPass /embed.js !
+ProxyPass /emoji !
+ProxyPass /favicon-dev.ico !
+ProxyPass /favicon.ico !
+ProxyPass /headers !
+ProxyPass /mask-icon.svg !
+ProxyPass /mstile-150x150.png !
+ProxyPass /oops.gif !
+ProxyPass /packs !
+ProxyPass /robots.txt !
+ProxyPass /sounds !
+ProxyPass /sw.js !
+ProxyPass /web-push-icon_expand.png !
+ProxyPass /web-push-icon_favourite.png !
+ProxyPass /web-push-icon_reblog.png !
+
 ProxyPreserveHost On
 
 ProxyPass ${appconfig.context}/api/v1/streaming http://127.0.0.1:${appconfig.tcpport.mastodon-streaming}/

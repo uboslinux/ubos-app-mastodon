@@ -66,9 +66,16 @@
                     "type"             : "directory",
                     "names"            : [
                         "${appconfig.datadir}",
-                        "${appconfig.datadir}/mastodon",
-                        "${appconfig.datadir}/redis"
+                        "${appconfig.datadir}/mastodon"
                     ]
+                },
+                {
+                    "type"             : "directory",
+                    "name"             : "${appconfig.datadir}/redis",
+                    "uname"            : "mastodon",
+                    "gname"            : "mastodon",
+                    "retentionpolicy"  : "keep",
+                    "retentionbucket"  : "redis"
                 },
                 {
                     "type"             : "directory",
@@ -103,6 +110,36 @@
                         "${appconfig.datadir}/mastodon/yarn.lock"
                     ],
                     "source" : "mastodon/$2"
+                },
+                {
+                    "type"             : "directorytree",
+                    "filepermissions"  : "preserve",
+                    "dirpermissions"   : "preserve",
+                    "names"            : [
+                        "500.html",
+                        "android-chrome-192x192.png",
+                        "apple-touch-icon.png",
+                        "assets",
+                        "avatars",
+                        "badge.png",
+                        "browserconfig.xml",
+                        "embed.js",
+                        "emoji",
+                        "favicon-dev.ico",
+                        "favicon.ico",
+                        "headers",
+                        "mask-icon.svg",
+                        "mstile-150x150.png",
+                        "oops.gif",
+                        "packs",
+                        "robots.txt",
+                        "sounds",
+                        "sw.js",
+                        "web-push-icon_expand.png",
+                        "web-push-icon_favourite.png",
+                        "web-push-icon_reblog.png"
+                    ],
+                    "source" : "mastodon/public/$2"
                 },
                 {
                     "type"             : "file",

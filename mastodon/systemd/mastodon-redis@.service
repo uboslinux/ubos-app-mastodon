@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=redis
-Group=redis
+User=mastodon
+Group=mastodon
 ExecStart=/usr/bin/redis-server /etc/mastodon/mastodon-redis-%i.conf
 # Does not work with non-default port: ExecStop=/usr/bin/redis-cli shutdown
 CapabilityBoundingSet=
