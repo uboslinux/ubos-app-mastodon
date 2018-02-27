@@ -142,6 +142,14 @@
                     "source" : "mastodon/public/$2"
                 },
                 {
+                    "type"             : "directory",
+                    "name"             : "${appconfig.datadir}/mastodon/public/system",
+                    "uname"            : "mastodon",
+                    "gname"            : "mastodon",
+                    "retentionpolicy"  : "keep",
+                    "retentionbucket"  : "system"
+                },
+                {
                     "type"             : "file",
                     "name"             : "${appconfig.datadir}/mastodon/.env.production",
                     "template"         : "tmpl/production.env.tmpl",
