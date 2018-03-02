@@ -21,8 +21,9 @@ depends=(
     'ubos-rails-support'
 )
 makedepends=(
-    'yarn'
     'npm'
+    'postgresql-libs'
+    'yarn'
 )
 options=('!strip')
 sha512sums=('SKIP')
