@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=2.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -56,8 +56,8 @@ package() {
     install -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/var/lib/ubos/manifests/${pkgname}.json
 
 # Icons
-#    mkdir -p ${pkgdir}/srv/http/_appicons/$pkgname
-#    install -m644 ${startdir}/appicons/{72x72,144x144}.png ${pkgdir}/srv/http/_appicons/$pkgname/
+    mkdir -p ${pkgdir}/srv/http/_appicons/${pkgname}
+    install -m644 ${startdir}/appicons/{72x72,144x144}.png ${pkgdir}/srv/http/_appicons/${pkgname}/
 
 # Templates
     install -D -m 644 ${startdir}/tmpl/*.tmpl -t ${pkgdir}/usr/share/${pkgname}/tmpl/
