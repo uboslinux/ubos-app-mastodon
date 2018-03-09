@@ -5,10 +5,10 @@
 
 post_install() {
     systemd-sysusers
-    chsh --shell /bin/bash mastodon
+    chsh --shell /bin/bash mastodon > /dev/null 2>&1
 }
 
 post_upgrade() {
     systemd-sysusers
-    chsh --shell /bin/bash mastodon
+    chsh --shell /bin/bash mastodon > /dev/null 2>&1
 }
