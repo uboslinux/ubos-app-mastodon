@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=2.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -81,4 +81,7 @@ package() {
     mkdir -p ${pkgdir}/usr/share/${pkgname}/mastodon
     cp -a ${srcdir}/${pkgname}-${pkgver}/* ${pkgdir}/usr/share/${pkgname}/mastodon/
     cp -a ${srcdir}/${pkgname}-${pkgver}/.bundle ${pkgdir}/usr/share/${pkgname}/mastodon/
+
+# Add UBOS rake tasks
+    install -m644 ${startdir}/ubos.rake ${pkgdir}/usr/share/${pkgname}/mastodon/lib/tasks/ubos.rake
 }

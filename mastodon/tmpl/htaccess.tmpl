@@ -17,6 +17,7 @@ ProxyPass /packs !
 ProxyPass /robots.txt !
 ProxyPass /sounds !
 ProxyPass /sw.js !
+ProxyPass /system !
 ProxyPass /web-push-icon_expand.png !
 ProxyPass /web-push-icon_favourite.png !
 ProxyPass /web-push-icon_reblog.png !
@@ -36,6 +37,12 @@ Header set Strict-Transport-Security "max-age=31536000"
 <LocationMatch "^/sw\.js$">
     Header set Cache-Control "public, max-age=0"
 </LocationMatch>
+
+Alias /system ${appconfig.datadir}/mastodon/public/system
+
+<Directory ${appconfig.datadir}/mastodon/public/system>
+  Require all granted
+</Directory>
 
 RequestHeader add Host ${site.hostname}
 RequestHeader add X-Forwarded-Proto https
