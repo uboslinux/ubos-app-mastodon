@@ -3,6 +3,9 @@ Description=mastodon-sidekiq
 After=network.target
 
 [Service]
+ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart mastodon-sidekiq@%I
+ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop mastodon-sidekiq@%I
+
 Type=simple
 User=mastodon
 WorkingDirectory=/var/lib/mastodon/%i/mastodon

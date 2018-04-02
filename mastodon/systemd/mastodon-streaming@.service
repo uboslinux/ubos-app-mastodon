@@ -3,6 +3,9 @@ Description=mastodon-streaming
 After=network.target
 
 [Service]
+ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart mastodon-streaming@%I
+ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop mastodon-streaming@%I
+
 Type=simple
 User=mastodon
 WorkingDirectory=/var/lib/mastodon/%i/mastodon

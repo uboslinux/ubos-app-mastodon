@@ -4,6 +4,9 @@ After=network.target
 Requires=postfix
 
 [Service]
+ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart mastodon-web@%I
+ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop mastodon-web@%I
+
 Type=simple
 User=mastodon
 WorkingDirectory=/var/lib/mastodon/%i/mastodon
