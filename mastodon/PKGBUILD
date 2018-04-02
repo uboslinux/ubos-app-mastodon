@@ -64,8 +64,8 @@ package() {
     mkdir -p ${pkgdir}/etc/${pkgname}
 
 # Systemd
-    install -D -m0644 ${startdir}/systemd/*.{service,target}   -t ${pkgdir}/usr/lib/systemd/system/
-    install -D -m0644 ${startdir}/mastodon.conf -t ${pkgdir}/etc/sysusers.d/
+    install -D -m0644 ${startdir}/systemd/*.{service,target} -t ${pkgdir}/usr/lib/systemd/system/
+    install -D -m0644 ${startdir}/mastodon.conf              -t ${pkgdir}/usr/lib/sysusers.d/
 
 # Data
     mkdir -p ${pkgdir}/ubos/lib/${pkgname}
