@@ -9,7 +9,7 @@ ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop mastodon-web@%I
 
 Type=simple
 User=mastodon
-WorkingDirectory=/var/lib/mastodon/%i/mastodon
+WorkingDirectory=/ubos/lib/mastodon/%i/mastodon
 EnvironmentFile=/etc/mastodon/mastodon-web-%i.env
 ExecStart=/usr/bin/bundle exec puma -C config/puma.rb
 TimeoutSec=15

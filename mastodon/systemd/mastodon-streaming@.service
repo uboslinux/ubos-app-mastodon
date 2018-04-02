@@ -8,7 +8,7 @@ ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop mastodon-streaming@
 
 Type=simple
 User=mastodon
-WorkingDirectory=/var/lib/mastodon/%i/mastodon
+WorkingDirectory=/ubos/lib/mastodon/%i/mastodon
 EnvironmentFile=/etc/mastodon/mastodon-streaming-%i.env
 ExecStart=/usr/bin/npm run start
 TimeoutSec=15
