@@ -2,12 +2,13 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=2.3.3
+pkgver=2.3.2
 pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
-source=("${pkgname}-${pkgver}::git+https://github.com/tootsuite/mastodon.git#tag=v${pkgver}")
+# source=("${pkgname}-${pkgver}::git+https://github.com/tootsuite/mastodon.git#tag=v${pkgver}")
+source=("https://github.com/tootsuite/mastodon/archive/v${pkgver}.tar.gz")
 releasepage=('https://github.com/tootsuite/mastodon/releases')
 depends=(
     'ffmpeg'
@@ -26,13 +27,19 @@ makedepends=(
     'yarn'
 )
 options=('!strip')
-sha512sums=('SKIP')
+sha512sums=('d6073726410cf8df2bb92fabe9c569bb58db0848f85b3e7a369e5cf9f7cd6cf5aa7223657b03d5097c4055b2670680a165ae4a9e7a3fadc55d9603fae0437c67')
 install=install
+
+prepare() {
+    cd ${srcdir}/${pkgname}-${pkgver}
+	patch -p0 < ${startdir}/upgrade-charlock-holmes.patch
+}
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
 
     echo Running bundle install
+    bundle install --no-deployment
     bundle install -j$(getconf _NPROCESSORS_ONLN) --deployment --without development test
 
     echo Running yarn install
@@ -44,7 +51,7 @@ build() {
     perl -pi -e "s!^(\s*)#\s*(config\.secret_key\s*=\s*).*\$!\1\2'$deviseSecretKey'!" config/initializers/devise.rb
 
     echo Running bundle exec
-    RAILS_ENV=production bundle exec rails assets:precompile
+    RAILS_ENV=production OTP_SECRET=xxx bundle exec rails assets:precompile
 
     # Make a few changes
     perl -pi -e "s!cache_dir:.*\$!cache_dir: '/var/cache/' + ENV['APPCONFIGID'],!" config/boot.rb
@@ -55,7 +62,7 @@ package() {
     install -D -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/ubos/lib/ubos/manifests/${pkgname}.json
 
 # Icons
-    install -D -m0644 ${startdir}/appicons/{72x72,144x144}.png ${pkgdir}/ubos/http/_appicons/${pkgname}/
+    install -D -m0644 ${startdir}/appicons/{72x72,144x144}.png -t ${pkgdir}/ubos/http/_appicons/${pkgname}/
 
 # Templates
     install -D -m0644 ${startdir}/tmpl/*.tmpl -t ${pkgdir}/ubos/share/${pkgname}/tmpl/
@@ -65,7 +72,7 @@ package() {
 
 # Systemd
     install -D -m0644 ${startdir}/systemd/*.{service,target} -t ${pkgdir}/usr/lib/systemd/system/
-    install -D -m0644 ${startdir}/mastodon.conf              -t ${pkgdir}/usr/lib/sysusers.d/
+    install -D -m0644 ${startdir}/sysusers.d/mastodon.conf   -t ${pkgdir}/usr/lib/sysusers.d/
 
 # Data
     mkdir -p ${pkgdir}/ubos/lib/${pkgname}
