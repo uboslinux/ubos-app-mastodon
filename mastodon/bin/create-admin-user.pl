@@ -15,6 +15,12 @@ if( 'install' eq $operation ) {
     my $adminPass   = $config->getResolveOrNull( 'site.admin.credential' );
     my $adminUserId = $config->getResolveOrNull( 'site.admin.userid' );
 
+    if( 'admin' eq $adminUserId ) {
+        my $replacement = 'mastodonadmin';
+        warning( 'mastodon does not allow a user named admin. Provisioning a user named', $replacement, 'instead.' );
+
+        $adminUserId = $replacement;
+    }
     my $cmdPrefix = "cd $dataDir/mastodon; APPCONFIGID=$appConfigId RAILS_ENV=production";
     my $out;
     my $err;
