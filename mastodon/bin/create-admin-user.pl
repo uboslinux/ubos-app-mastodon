@@ -15,9 +15,20 @@ if( 'install' eq $operation ) {
     my $adminPass   = $config->getResolveOrNull( 'site.admin.credential' );
     my $adminUserId = $config->getResolveOrNull( 'site.admin.userid' );
 
-    if( 'admin' eq $adminUserId ) {
-        my $replacement = 'mastodonadmin';
-        warning( 'mastodon does not allow a user named admin. Provisioning a user named', $replacement, 'instead.' );
+    # from config/settings.yml
+    my $reservedUserIds = {
+        'admin',
+        'support',
+        'help',
+        'root',
+        'webmaster',
+        'administrator'
+    };
+
+    if( exists( $reservedUserIds->{$adminUserId} )) {
+        my $replacement = 'mastodon' . $reservedUserIds->{$adminUserId};
+        warning( 'mastodon does not allow a user named', $reservedUserIds->{$adminUserId},
+                 '. Provisioning a user named', $replacement, 'instead.' );
 
         $adminUserId = $replacement;
     }
