@@ -11,4 +11,5 @@ post_install() {
 post_upgrade() {
     systemd-sysusers
     chsh --shell /bin/bash mastodon > /dev/null 2>&1
+    usermod --home /ubos/lib/mastodon mastodon
 }
