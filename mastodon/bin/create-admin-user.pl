@@ -17,18 +17,17 @@ if( 'install' eq $operation ) {
 
     # from config/settings.yml
     my $reservedUserIds = {
-        'admin',
-        'support',
-        'help',
-        'root',
-        'webmaster',
-        'administrator'
+        'admin'         => 1,
+        'support'       => 1,
+        'help'          => 1,
+        'root'          => 1,
+        'webmaster'     => 1,
+        'administrator' => 1
     };
 
     if( exists( $reservedUserIds->{$adminUserId} )) {
-        my $replacement = 'mastodon' . $reservedUserIds->{$adminUserId};
-        warning( 'mastodon does not allow a user named', $reservedUserIds->{$adminUserId},
-                 '. Provisioning a user named', $replacement, 'instead.' );
+        my $replacement = "mastodon$adminUserId";
+        warning( "mastodon does not allow a user named $adminUserId. Provisioning a user named $replacement instead." );
 
         $adminUserId = $replacement;
     }
@@ -44,7 +43,7 @@ $adminPass
 INPUT
 
     if( UBOS::Utils::myexec( "$cmdPrefix bundle exec rails ubos:provision_admin", $input, \$out, \$err )) {
-        error( 'Rake task ubos:provision_admin:', $out, $err );
+        error( 'Rake task ubos:provision_admin: cmdPrefix:', $cmdPrefix, 'input: ', $input, 'output:'. $out, 'error:', $err );
     }
 }
 
