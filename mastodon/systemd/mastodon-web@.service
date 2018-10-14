@@ -1,7 +1,7 @@
 [Unit]
 Description=mastodon-web
 After=network.target
-Requires=postfix
+Requires=postfix.service
 
 [Service]
 ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart mastodon-web@%I
