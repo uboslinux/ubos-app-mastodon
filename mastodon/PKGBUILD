@@ -2,8 +2,8 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=2.5.1
-pkgrel=2
+pkgver=2.6.1
+pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -27,7 +27,7 @@ makedepends=(
     'yarn'
 )
 options=('!strip')
-sha512sums=('9c077b141de81c594b9e386ff1fd6ec8b530951011704b83d8bd26def9454736cb0b3e73b89af4e91dff12a1d461ac5e74bb4fa7bbcb0d06a381bae9d72e6303')
+sha512sums=('35cdd47a242b5e41cba2c1e051001becb7ebe3abace446ce1984525a5dc1529c170dd866a5bff8385f2917cfffc6e951a3c91b0bade8fd2c8eb2eefb49198385')
 install=install
 
 # prepare() {
