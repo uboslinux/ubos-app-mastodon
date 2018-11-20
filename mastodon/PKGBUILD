@@ -25,6 +25,9 @@ makedepends=(
     'npm'
     'postgresql-libs'
     'yarn'
+    'git'
+    'gcc'
+    'python'
 )
 options=('!strip')
 sha512sums=('35cdd47a242b5e41cba2c1e051001becb7ebe3abace446ce1984525a5dc1529c170dd866a5bff8385f2917cfffc6e951a3c91b0bade8fd2c8eb2eefb49198385')
@@ -39,8 +42,8 @@ build() {
     cd ${srcdir}/${pkgname}-${pkgver}
 
     echo Running bundle install
-    bundle install --no-deployment
-    bundle install -j$(getconf _NPROCESSORS_ONLN) --deployment --without development test
+    bundle install --path vendor/bundle --no-deployment
+    bundle install --path vendor/bundle -j$(getconf _NPROCESSORS_ONLN) --deployment --without development test
 
     echo Running yarn install
     yarn install --pure-lockfile
