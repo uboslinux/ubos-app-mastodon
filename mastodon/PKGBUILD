@@ -2,7 +2,7 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=2.6.1
+pkgver=2.6.2
 pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
@@ -30,7 +30,7 @@ makedepends=(
     'python'
 )
 options=('!strip')
-sha512sums=('35cdd47a242b5e41cba2c1e051001becb7ebe3abace446ce1984525a5dc1529c170dd866a5bff8385f2917cfffc6e951a3c91b0bade8fd2c8eb2eefb49198385')
+sha512sums=('768167f463b6f07606b95d9a30e63b1e78ebce2058368e7b7202eb3ab4c1c2a0d7e10b4a884b3ec729e6927082d707c52e104b028036c7d115c439ba9e33faf9')
 install=install
 
 # prepare() {
