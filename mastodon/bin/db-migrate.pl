@@ -17,18 +17,8 @@ if( 'install' eq $operation || 'upgrade' eq $operation ) {
     my $dbUser       = $config->getResolveOrNull( 'appconfig.postgresql.dbuser.maindb' );
     my $dbName       = $config->getResolveOrNull( 'appconfig.postgresql.dbname.maindb' );
 
-    # This seems to be a hack, but after restore from backup, our
-    # postgres user does not have any privileges any more to access
-    # this database, see https://github.com/uboslinux/ubos-mastodon/issues/7
-
-    unless( UBOS::Databases::PostgreSqlDriver::executeCmdAsAdmin(
-            'psql -v HISTFILE=/dev/null ' . $dbName,
-            <<SQL )) {
-GRANT ALL ON ALL TABLES IN SCHEMA public TO "$dbUser";
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO "$dbUser";
-GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO "$dbUser";
-SQL
-        error( 'Updating postgres user permissions failed' );
+    unless( UBOS::Databases::PostgreSqlDriver::changeSchemaOwnership( $dbName, $dbUser )) {
+        error( 'Changing postgres schema ownership failed' );
     }
 
     my $cmd = 'cd ' . $dataDir . '/mastodon'
