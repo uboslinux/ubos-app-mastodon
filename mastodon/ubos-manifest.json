@@ -99,6 +99,7 @@
                         "${appconfig.datadir}/mastodon/Gemfile",
                         "${appconfig.datadir}/mastodon/Gemfile.lock",
                         "${appconfig.datadir}/mastodon/lib",
+                        "${appconfig.datadir}/mastodon/log",
                         "${appconfig.datadir}/mastodon/node_modules",
                         "${appconfig.datadir}/mastodon/package.json",
                         "${appconfig.datadir}/mastodon/public",
@@ -152,15 +153,6 @@
                 {
                     "type"         : "perlscript",
                     "source"       : "bin/generate-production-env.pl"
-                },
-                {
-                    "type"         : "perlscript",
-                    "source"       : "bin/create-logdir.pl"
-                },
-                {
-                    "type"         : "symlink",
-                    "name"         : "${appconfig.datadir}/mastodon/log",
-                    "source"       : "/var/log/mastodon-${appconfig.appconfigid}"
                 },
                 {
                     "type"         : "systemd-service",
