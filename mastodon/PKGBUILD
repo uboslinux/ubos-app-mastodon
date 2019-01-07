@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=2.6.5
-pkgrel=2
+pkgrel=3
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -13,6 +13,7 @@ releasepage=('https://github.com/tootsuite/mastodon/releases')
 depends=(
     'ffmpeg'
     'imagemagick'
+    'libidn'
     'libpqxx'
     'libxml2'
     'libxslt'
