@@ -10,17 +10,19 @@ use UBOS::Databases::PostgreSqlDriver;
 use UBOS::Logging;
 use UBOS::Utils;
 
-if( 'install' eq $operation || 'upgrade' eq $operation ) {
-    my $appConfigId  = $config->getResolveOrNull( 'appconfig.appconfigid' );
-    my $dataDir      = $config->getResolveOrNull( 'appconfig.datadir' );
+my $appConfigId  = $config->getResolveOrNull( 'appconfig.appconfigid' );
+my $dataDir      = $config->getResolveOrNull( 'appconfig.datadir' );
 
-    my $dbUser       = $config->getResolveOrNull( 'appconfig.postgresql.dbuser.maindb' );
-    my $dbName       = $config->getResolveOrNull( 'appconfig.postgresql.dbname.maindb' );
+my $dbUser       = $config->getResolveOrNull( 'appconfig.postgresql.dbuser.maindb' );
+my $dbName       = $config->getResolveOrNull( 'appconfig.postgresql.dbname.maindb' );
 
+if( 'upgrade' eq $operation ) {
     unless( UBOS::Databases::PostgreSqlDriver::changeSchemaOwnership( $dbName, $dbUser )) {
         error( 'Changing postgres schema ownership failed' );
     }
+}
 
+if( 'install' eq $operation || 'upgrade' eq $operation ) {
     my $cmd = 'cd ' . $dataDir . '/mastodon'
             . ' &&'
             . ' SAFETY_ASSURED=1'
@@ -32,7 +34,6 @@ if( 'install' eq $operation || 'upgrade' eq $operation ) {
     if( UBOS::Utils::myexec( $cmd, undef, \$out, \$out )) {
         error( "Rails db:migrate failed: cmd: $cmd, out: $out" );
     }
-
 }
 
 1;

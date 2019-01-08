@@ -1,3 +1,6 @@
+Redis
+=====
+
 Redis emits the following warnings upon boot, which we don't do anything
 about (for now, or forever) as addressing them for all installations
 might create other problems with other apps on the same server.
@@ -14,3 +17,13 @@ might create other problems with other apps on the same server.
   and add it to your /etc/rc.local in order to retain the setting after
   a reboot. Redis must be restarted after THP is disabled.
 
+Postgresql
+==========
+
+Unlike gladiwashere-php-postgresql, Mastodon creates and manages its own
+tables. So all database objects are owned by the provisioned database
+user, and not postgres.
+
+Upon restore (and during upgrade), the data is restored as user postgres,
+however, and so the ownership needs to be set to the (newly provisioned)
+database user instead.
