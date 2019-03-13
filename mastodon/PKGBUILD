@@ -2,7 +2,7 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=2.7.3
+pkgver=2.7.4
 pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
@@ -12,6 +12,7 @@ source=("https://github.com/tootsuite/mastodon/archive/v${pkgver}.tar.gz")
 releasepage=('https://github.com/tootsuite/mastodon/releases')
 depends=(
     'ffmpeg'
+    'gcc'
     'imagemagick'
     'libidn'
     'libpqxx'
@@ -27,7 +28,6 @@ makedepends=(
     'postgresql-libs'
     'yarn'
     'git'
-    'gcc'
     'python'
 )
 options=('!strip')

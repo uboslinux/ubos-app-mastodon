@@ -10,11 +10,11 @@ namespace :ubos do
     print 'Enter password: '
     password = STDIN.gets.chomp
 
-    user = User.new(email: email, password: password, account_attributes: { username: username }, admin: true, confirmed_at: Time.now.utc )
+    user = User.new(email: email, password: password, account_attributes: { username: username }, admin: true, confirmed_at: Time.now.utc, agreement: true )
     if user.save
       puts 'User created.'
     else
-      puts 'Following errors occured while creating new user:'
+      puts 'Errors occured while creating new user:'
       user.errors.each do |key, val|
         puts "#{key}: #{val}"
       end
