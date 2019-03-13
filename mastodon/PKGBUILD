@@ -31,7 +31,7 @@ makedepends=(
     'python'
 )
 options=('!strip')
-sha512sums=('eeb80eaa4b9d9985166b47347a105d5fb6b033e9ad1878c881b12500eb74af01084ea581bb26a89198fa1d7bc685b2f84def3570707e97fd5fc49b97b7c1502b')
+sha512sums=('d4e3d909940adde07db2dfb345704416db0c4e750e10f7901ff211b3a35658926d06ba4aa5d1d4fc9f473a15babc2a7c30571d7a880aa709e96c4206b1c806d0')
 install=install
 
 # prepare() {
@@ -41,6 +41,10 @@ install=install
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
+
+    echo Updating Gemfile.lock
+    rm Gemfile.lock
+    bundle lock --update
 
     echo Running bundle install
     bundle install --path vendor/bundle --no-deployment
