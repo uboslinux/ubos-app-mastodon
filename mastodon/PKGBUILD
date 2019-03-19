@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=2.7.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -21,9 +21,10 @@ depends=(
     'nodejs'
     'protobuf-c'
     'redis'
-    'ubos-rails-support'
+    'ruby-bundler'
 )
 makedepends=(
+    'nvm'
     'npm'
     'postgresql-libs'
     'yarn'
@@ -34,13 +35,23 @@ options=('!strip')
 sha512sums=('d4e3d909940adde07db2dfb345704416db0c4e750e10f7901ff211b3a35658926d06ba4aa5d1d4fc9f473a15babc2a7c30571d7a880aa709e96c4206b1c806d0')
 install=install
 
-# prepare() {
-#     cd ${srcdir}/${pkgname}-${pkgver}
-#   patch -p0 < ${startdir}/upgrade-charlock-holmes.patch
-# }
+# Use NVM
+# Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
+# you get some error message about "not compatible ... 'prefix' option" (don't ask me)
+. /usr/share/nvm/init-nvm.sh
+NODE_VERSION="--lts=carbon"
+# Boron does not work as of 2.7.4-2, 2019-03-19
+
+prepare() {
+    cd ${srcdir}/${pkgname}-${pkgver}
+
+    NVM_DIR=$(pwd)/nvm nvm install ${NODE_VERSION}
+}
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
+
+    export NVM_DIR=$(pwd)/nvm
 
     echo Updating Gemfile.lock
     rm Gemfile.lock

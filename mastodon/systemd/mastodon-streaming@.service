@@ -10,7 +10,8 @@ Type=simple
 User=mastodon
 WorkingDirectory=/ubos/lib/mastodon/%i/mastodon
 EnvironmentFile=/etc/mastodon/mastodon-streaming-%i.env
-ExecStart=/usr/bin/npm run start
+# Run the node version that we used: this probably breaks when there are minor version upgrades
+ExecStart=/ubos/share/mastodon/mastodon/nvm/versions/node/v8.15.1/bin/node /usr/bin/npm --scripts-prepend-node-path=auto run start
 TimeoutSec=15
 Restart=always
 
