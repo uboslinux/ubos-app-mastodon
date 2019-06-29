@@ -2,8 +2,8 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=2.7.4
-pkgrel=2
+pkgver=2.9.2
+pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -32,7 +32,7 @@ makedepends=(
     'python'
 )
 options=('!strip')
-sha512sums=('d4e3d909940adde07db2dfb345704416db0c4e750e10f7901ff211b3a35658926d06ba4aa5d1d4fc9f473a15babc2a7c30571d7a880aa709e96c4206b1c806d0')
+sha512sums=('dad3eccac6366e4e3e4d2a473bcb86e58679ea4240253cc10f9cd2559b09213526fa294453c0cc60649685f463090212ba2fb2401e953022224accc79a4feb0a')
 install=install
 
 # Use NVM

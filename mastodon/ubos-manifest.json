@@ -176,6 +176,12 @@
                     "type"   : "perlscript",
                     "source" : "bin/create-admin-user.pl"
                 }
+            ],
+            "upgraders" : [
+                {
+                    "type"   : "perlscript",
+                    "source" : "bin/clear-cache.pl"
+                }
             ]
         },
         "postgresql" : {
