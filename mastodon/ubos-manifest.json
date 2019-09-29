@@ -3,7 +3,7 @@
 
     "roles" : {
         "apache2" : {
-            "fixedcontext" : "",
+            "defaultcontext" : "",
             "depends" : [
                 "npm",
                 "postfix"
@@ -14,9 +14,9 @@
                 "proxy_http",
                 "remoteip"
             ],
-            "xxx-later-wellknown" : {
+            "wellknown" : {
                 "webfinger" : {
-                    "proxy" : "http://localhost:${tcpport.mastodon-web}/.well-known/webfinger"
+                    "proxy" : "http://127.0.0.1:${appconfig.tcpport.mastodon-web}/.well-known/webfinger"
                 }
             },
             "appconfigitems" : [
