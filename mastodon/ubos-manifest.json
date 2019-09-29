@@ -14,6 +14,11 @@
                 "proxy_http",
                 "remoteip"
             ],
+            "xxx-later-wellknown" : {
+                "webfinger" : {
+                    "proxy" : "http://localhost:${tcpport.mastodon-web}/.well-known/webfinger"
+                }
+            },
             "appconfigitems" : [
                 {
                     "type"             : "tcpport",
@@ -156,19 +161,19 @@
                 },
                 {
                     "type"         : "systemd-service",
-                    "name"         : "mastodon-redis@${appconfig.appconfigid}",
+                    "name"         : "mastodon-redis@${appconfig.appconfigid}"
                 },
                 {
                     "type"         : "systemd-service",
-                    "name"         : "mastodon-web@${appconfig.appconfigid}",
+                    "name"         : "mastodon-web@${appconfig.appconfigid}"
                 },
                 {
                     "type"         : "systemd-service",
-                    "name"         : "mastodon-sidekiq@${appconfig.appconfigid}",
+                    "name"         : "mastodon-sidekiq@${appconfig.appconfigid}"
                 },
                 {
                     "type"         : "systemd-service",
-                    "name"         : "mastodon-streaming@${appconfig.appconfigid}",
+                    "name"         : "mastodon-streaming@${appconfig.appconfigid}"
                 }
             ],
             "installers" : [

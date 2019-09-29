@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=2.9.2
-pkgrel=2
+pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -49,13 +49,15 @@ prepare() {
 }
 
 build() {
+    # Determine version outside of directory within Gemfile.lock
+    bundleVer=$(bundle --version | cut -d' '  -f3)
     cd ${srcdir}/${pkgname}-${pkgver}
 
     export NVM_DIR=$(pwd)/nvm
 
     echo Updating Gemfile.lock
-    rm Gemfile.lock
-    bundle lock --update
+    sed -i "s/1.17.3/$bundleVer/g" Gemfile.lock
+    sed -i "s/fuubar (2\.4\.0)/fuubar (2\.4\.1)/" Gemfile.lock
 
     echo Running bundle install
     bundle install --path vendor/bundle --no-deployment
