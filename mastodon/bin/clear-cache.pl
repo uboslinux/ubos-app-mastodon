@@ -18,6 +18,7 @@ if( 'upgrade' eq $operation ) {
     my $cmd = "cd '$appConfigDir';";
     $cmd .= " RAILS_ENV=production bin/tootctl cache clear";
 
+    my $out;
     if( UBOS::Utils::myexec( $cmd, undef, \$out, \$out ) != 0 ) {
         error( "Cleaning mastodon cache failed: $out" );
         $ret = 0;
