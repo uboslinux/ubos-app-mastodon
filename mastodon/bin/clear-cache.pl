@@ -13,10 +13,13 @@ use UBOS::Utils;
 my $ret = 1;
 
 if( 'upgrade' eq $operation ) {
-    my $appConfigDir = $config->getResolveOrNull( 'appconfig.apache2.dir' );
+    my $appConfigDataDir = $config->getResolveOrNull( 'appconfig.datadir' );
+    my $appConfigId      = $config->getResolveOrNull( 'appconfig.appconfigid' );
 
-    my $cmd = "cd '$appConfigDir';";
-    $cmd .= " RAILS_ENV=production bin/tootctl cache clear";
+    my $cmd = "cd '$appConfigDataDir/mastodon';";
+    $cmd .= " APPCONFIGID=$appConfigId";
+    $cmd .= " RAILS_ENV=production";
+    $cmd .= " bin/tootctl cache clear";
 
     my $out;
     if( UBOS::Utils::myexec( $cmd, undef, \$out, \$out ) != 0 ) {
