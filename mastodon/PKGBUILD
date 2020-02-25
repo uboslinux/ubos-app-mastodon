@@ -2,8 +2,8 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=2.9.2
-pkgrel=4
+pkgver=3.1.1
+pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
@@ -12,27 +12,29 @@ source=("https://github.com/tootsuite/mastodon/archive/v${pkgver}.tar.gz")
 releasepage=('https://github.com/tootsuite/mastodon/releases')
 depends=(
     'ffmpeg'
-    'gcc'
     'imagemagick'
     'libidn'
     'libpqxx'
     'libxml2'
     'libxslt'
+    'libyaml'
     'nodejs'
-    'protobuf-c'
+    'postgresql'
     'redis'
     'ruby-bundler'
+    'protobuf'
+    'zlib'
 )
 makedepends=(
+    'gcc'
     'nvm'
     'npm'
-    'postgresql-libs'
     'yarn'
     'git'
     'python'
 )
 options=('!strip')
-sha512sums=('dad3eccac6366e4e3e4d2a473bcb86e58679ea4240253cc10f9cd2559b09213526fa294453c0cc60649685f463090212ba2fb2401e953022224accc79a4feb0a')
+sha512sums=('085b546c34ef86dc234fc4ad1ed96b01af8c68cdb616250ea1843c6d27c1db97735cd5b4f6674a6844cc45a81b0d25b3b9da63459c60f2b5c891d02f409eaecf')
 install=install
 
 # Use NVM
@@ -57,7 +59,7 @@ build() {
 
     echo Updating Gemfile.lock
     sed -i "s/1.17.3/$bundleVer/g" Gemfile.lock
-    sed -i "s/fuubar (2\.4\.0)/fuubar (2\.4\.1)/" Gemfile.lock
+    # sed -i "s/fuubar (2\.4\.0)/fuubar (2\.4\.1)/" Gemfile.lock
 
     echo Running bundle install
     bundle install --path vendor/bundle --no-deployment
