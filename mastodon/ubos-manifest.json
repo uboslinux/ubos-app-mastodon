@@ -1,5 +1,6 @@
 {
     "type" : "app",
+    "requirestls" : true,
 
     "roles" : {
         "apache2" : {
@@ -17,6 +18,17 @@
             "wellknown" : {
                 "webfinger" : {
                     "proxy" : "http://127.0.0.1:${appconfig.tcpport.mastodon-web}/.well-known/webfinger"
+                },
+                "robots.txt" : {
+                    "disallow" : [
+                        "/media_proxy/",
+                        "/interact/"
+                    ]
+                # },
+                # later
+                # "nodeinfo" : {
+                #     "template"     : "{\"links\":[{\"rel\":\"http://nodeinfo.diaspora.software/ns/schema/2.0","href":"${site.protocol}://${site.hostname}/nodeinfo/2.0\"}]}",
+                #     "templatelang" : "varsubst"
                 }
             },
             "appconfigitems" : [
@@ -231,6 +243,7 @@
             "type"        : "password",
             "required"    : false,
             "private"     : true,
+            "internal"    : true,
             "regex"       : "[0-9a-f]{128}",
             "default" : {
                 "expression" : "${randomHex(128)}"
@@ -240,6 +253,7 @@
             "type"        : "password",
             "required"    : false,
             "private"     : true,
+            "internal"    : true,
             "regex"       : "[0-9a-f]{128}",
             "default" : {
                 "expression" : "${randomHex(128)}"
@@ -249,6 +263,7 @@
             "type"        : "password",
             "required"    : false,
             "private"     : true,
+            "internal"    : true,
             "regex"       : "[0-9a-f]{128}",
             "default" : {
                 "expression" : "${randomHex(128)}"
