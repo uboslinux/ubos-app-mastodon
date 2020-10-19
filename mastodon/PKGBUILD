@@ -42,8 +42,7 @@ sha512sums=('24d8379906dfe952f68b7664dbd9029d54106fc3b2a4f0db2806a03ccd249a7c14f
 # Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
 # you get some error message about "not compatible ... 'prefix' option" (don't ask me)
 . /usr/share/nvm/init-nvm.sh
-NODE_VERSION="--lts=carbon"
-# Boron does not work as of 2.7.4-2, 2019-03-19
+NODE_VERSION="--lts=erbium"
 
 prepare() {
     cd ${srcdir}/${pkgname}-${pkgver}
