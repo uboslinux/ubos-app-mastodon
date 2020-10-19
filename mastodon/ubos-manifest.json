@@ -24,11 +24,10 @@
                         "/media_proxy/",
                         "/interact/"
                     ]
-                # },
-                # later
-                # "nodeinfo" : {
-                #     "template"     : "{\"links\":[{\"rel\":\"http://nodeinfo.diaspora.software/ns/schema/2.0","href":"${site.protocol}://${site.hostname}/nodeinfo/2.0\"}]}",
-                #     "templatelang" : "varsubst"
+                },
+                "nodeinfo" : {
+                    "template"     : "{\"links\":[{\"rel\":\"http://nodeinfo.diaspora.software/ns/schema/2.0\",\"href\":\"${site.protocol}://${site.hostname}/nodeinfo/2.0\"}]}",
+                    "templatelang" : "varsubst"
                 }
             },
             "appconfigitems" : [
