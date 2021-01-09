@@ -2,7 +2,7 @@ developer=https://github.com/tootsuite/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=3.2.0
+pkgver=3.3.0
 # When updating this, also update the node version in mastodon-streaming@.service
 pkgrel=1
 pkgdesc="Decentralized microblogging"
@@ -36,7 +36,7 @@ makedepends=(
 )
 options=('!strip')
 install=install
-sha512sums=('24d8379906dfe952f68b7664dbd9029d54106fc3b2a4f0db2806a03ccd249a7c14faa1c2d8d112ba428426e79094278cd964441e1848a4bd7c0459012f8a6e0c')
+sha512sums=('98abde15d7b547f5aa913810a7b743bef181d74b163747fb18096fe82c4f6d0f24b223dd433a7edc4edf3cd08c0c3c9ad7eaceaa96f1a85709825382fee67314')
 
 # Use NVM
 # Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
