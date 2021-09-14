@@ -221,6 +221,11 @@
                 {
                     "type"   : "perlscript",
                     "name"   : "maindb",
+                    "source" : "bin/db-pre-migrate.pl"
+                },
+                {
+                    "type"   : "perlscript",
+                    "name"   : "maindb",
                     "source" : "bin/db-migrate.pl"
                 }
             ]
