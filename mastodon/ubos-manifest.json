@@ -176,7 +176,8 @@
                 },
                 {
                     "type"         : "systemd-service",
-                    "name"         : "mastodon-web@${appconfig.appconfigid}"
+                    "name"         : "mastodon-web@${appconfig.appconfigid}",
+                    "phase"        : "suspendresume"
                 },
                 {
                     "type"         : "systemd-service",
@@ -184,7 +185,8 @@
                 },
                 {
                     "type"         : "systemd-service",
-                    "name"         : "mastodon-streaming@${appconfig.appconfigid}"
+                    "name"         : "mastodon-streaming@${appconfig.appconfigid}",
+                    "phase"        : "suspendresume"
                 }
             ],
             "installers" : [
