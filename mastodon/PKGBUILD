@@ -1,16 +1,17 @@
-developer=https://github.com/tootsuite/mastodon
+developer=https://github.com/mastodon/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=3.4.1
+pkgver=3.4.4
 # When updating this, also update the node version in mastodon-streaming@.service
-pkgrel=2
+pkgrel=1
 pkgdesc="Decentralized microblogging"
 arch=('any')
 license=("AGPL3")
-# source=("${pkgname}-${pkgver}::git+https://github.com/tootsuite/mastodon.git#tag=v${pkgver}")
-source=("https://github.com/tootsuite/mastodon/archive/v${pkgver}.tar.gz")
-releasepage=('https://github.com/tootsuite/mastodon/releases')
+# source=("${pkgname}-${pkgver}::git+https://github.com/mastodon/mastodon.git#tag=v${pkgver}")
+# source=("https://github.com/mastodon/mastodon/archive/refs/tags/v${pkgver}.tar.gz")
+source=("${pkgname}-v${pkgver}.tar.gz::https://codeload.github.com/mastodon/mastodon/tar.gz/refs/tags/v${pkgver}")
+releasepage=('https://github.com/mastodon/mastodon/releases')
 depends=(
     'ffmpeg'
     'imagemagick'
@@ -36,15 +37,16 @@ makedepends=(
 )
 options=('!strip')
 install=install
-sha512sums=('2c3828c0c8eda45782129c2adcce791a1fa0422be7ec3dd25bf87c9a6407872b36a842365ee0ff9b4d0cbabbb5c129e4d42c8ba695aac329021f6efe18d3c5d3')
+sha512sums=('0105ebebf57ec44ebe817f4f05b636793e8bf06a089683a25f6a9a60d0763f093f9aa3688577207af7446c29389869b1e82e3d313d24d83c5ea5117695b33f10')
 
 # Use NVM
 # Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
 # you get some error message about "not compatible ... 'prefix' option" (don't ask me)
-. /usr/share/nvm/init-nvm.sh
 NODE_VERSION="--lts=erbium"
 
 prepare() {
+    . /usr/share/nvm/init-nvm.sh
+
     cd ${srcdir}/${pkgname}-${pkgver}
     patch -p0 < ${startdir}/rexml.patch
     NVM_DIR=$(pwd)/nvm nvm install ${NODE_VERSION}
