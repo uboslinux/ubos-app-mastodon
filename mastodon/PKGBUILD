@@ -45,7 +45,7 @@ sha512sums=('0105ebebf57ec44ebe817f4f05b636793e8bf06a089683a25f6a9a60d0763f093f9
 NODE_VERSION="--lts=erbium"
 
 prepare() {
-    . /usr/share/nvm/init-nvm.sh
+    NVM_DIR=$(pwd)/nvm . /usr/share/nvm/init-nvm.sh
 
     cd ${srcdir}/${pkgname}-${pkgver}
     patch -p0 < ${startdir}/rexml.patch
