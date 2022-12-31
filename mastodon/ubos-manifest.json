@@ -17,7 +17,7 @@
             ],
             "wellknown" : {
                 "webfinger" : {
-                    "proxy" : "http://127.0.0.1:${appconfig.tcpport.mastodon-web}/.well-known/webfinger"
+                    "proxy" : "http://127.0.0.1:${appconfig.tcpport.mastodon-web}/.well-known/webfinger host=${site.hostname} X-Forwarded-Proto=https"
                 },
                 "robots.txt" : {
                     "disallow" : [
