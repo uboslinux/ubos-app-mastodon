@@ -30,7 +30,7 @@ if( 'deploy' eq $operation ) {
     my $otpSecret       = $config->getResolveOrNull( 'installable.customizationpoints.otp_secret.value' );
 
     my $singleUserMode  = $config->getResolve( 'installable.customizationpoints.singleusermode.value', 1 );
-    $singleUserMode     = $singleUserMode ? 'true' : 'false'; 
+    $singleUserMode     = $singleUserMode ? 'true' : 'false';
 
     my $defaultLocale   = $config->getResolveOrNull( 'installable.customizationpoints.defaultlocale.value' );
 
@@ -64,6 +64,7 @@ RUBY
     my $content = <<CONTENT;
 REDIS_HOST=127.0.0.1
 REDIS_PORT=$redisPort
+REDIS_PASSWORD=
 
 DB_HOST=$dbHost
 DB_USER=$dbUser
@@ -73,7 +74,6 @@ DB_PORT=$dbPort
 
 LOCAL_DOMAIN=$hostname
 
-PAPERCLIP_SECRET=$paperclipSecret
 SECRET_KEY_BASE=$secretKeyBase
 OTP_SECRET=$otpSecret
 
@@ -89,6 +89,7 @@ SMTP_PORT=25
 SMTP_FROM_ADDRESS=notifications\@$hostname
 SMTP_AUTH_METHOD=none
 SMTP_OPENSSL_VERIFY_MODE=none
+SMTP_ENABLE_STARTTLS=auto
 
 STREAMING_CLUSTER_NUM=1
 CONTENT
@@ -105,8 +106,6 @@ CONTENT
     }
 # Only allow registrations with the following e-mail domains
 # EMAIL_DOMAIN_WHITELIST=example1.com|example2.de|etc
-
-        
 
     UBOS::Utils::saveFile( $name, $content, 0400, 'mastodon', 'mastodon' );
 }

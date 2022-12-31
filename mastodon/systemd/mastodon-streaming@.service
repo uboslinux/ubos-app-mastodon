@@ -11,9 +11,43 @@ User=mastodon
 WorkingDirectory=/ubos/lib/mastodon/%i/mastodon
 EnvironmentFile=/etc/mastodon/mastodon-streaming-%i.env
 # Run the node version that we used: this probably breaks when there are minor version upgrades
-ExecStart=/ubos/share/mastodon/mastodon/nvm/versions/node/v12.22.6/bin/node /usr/bin/npm --scripts-prepend-node-path=auto run start
+ExecStart=/ubos/share/mastodon/mastodon/nvm/versions/node/v16.19.0/bin/node /ubos/lib/mastodon/%i/mastodon/streaming
 TimeoutSec=15
 Restart=always
+# Proc filesystem
+ProcSubset=pid
+ProtectProc=invisible
+# Capabilities
+CapabilityBoundingSet=
+# Security
+NoNewPrivileges=true
+# Sandboxing
+ProtectSystem=strict
+PrivateTmp=true
+PrivateDevices=true
+PrivateUsers=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET
+RestrictAddressFamilies=AF_INET6
+RestrictAddressFamilies=AF_NETLINK
+RestrictAddressFamilies=AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+PrivateMounts=true
+ProtectClock=true
+# System Call Filtering
+SystemCallArchitectures=native
+SystemCallFilter=~@cpu-emulation @debug @keyring @ipc @memlock @mount @obsolete @privileged @resources @setuid
+SystemCallFilter=pipe
+SystemCallFilter=pipe2
+ReadWritePaths=/ubos/lib/mastodon/%i/mastodon
 
 [Install]
 WantedBy=multi-user.target

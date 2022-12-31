@@ -2,7 +2,7 @@ developer=https://github.com/mastodon/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=3.4.4
+pkgver=4.0.2
 # When updating this, also update the node version in mastodon-streaming@.service
 pkgrel=1
 pkgdesc="Decentralized microblogging"
@@ -37,22 +37,23 @@ makedepends=(
 )
 options=('!strip')
 install=install
-sha512sums=('0105ebebf57ec44ebe817f4f05b636793e8bf06a089683a25f6a9a60d0763f093f9aa3688577207af7446c29389869b1e82e3d313d24d83c5ea5117695b33f10')
+sha512sums=('5726525290eddb79b661d965dd6af90c7a97f8702812769a1e89aae4898cd43513e7dfc33761b783c5b21b2e4a53a2a346f1ed7689ee8aea0ea9e434be81bcb3')
 
 # Use NVM
 # Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
 # you get some error message about "not compatible ... 'prefix' option" (don't ask me)
-NODE_VERSION="--lts=erbium"
+NODE_VERSION="--lts=gallium"
 
 prepare() {
-    NVM_DIR=$(pwd)/nvm . /usr/share/nvm/init-nvm.sh
+    export NVM_DIR=${srcdir}/${pkgname}-${pkgver}/nvm
+    source /usr/share/nvm/init-nvm.sh
+
+    nvm install ${NODE_VERSION}
 
     cd ${srcdir}/${pkgname}-${pkgver}
-    patch -p0 < ${startdir}/rexml.patch
-    NVM_DIR=$(pwd)/nvm nvm install ${NODE_VERSION}
 
-    # Allow use of any bundler
-    sed -i -e '/BUNDLED/,+1d' Gemfile.lock
+    corepack enable
+    yarn set version classic
 }
 
 build() {
@@ -64,7 +65,6 @@ build() {
     bundle config set without 'development test'
     bundle install -j$(getconf _NPROCESSORS_ONLN)
 
-    # yarn config set ignore-engines true
     yarn install --pure-lockfile
 
     # We need this here otherwise asset precompilation fails. However, we need to
@@ -78,6 +78,9 @@ build() {
 
     # Make a few changes
     perl -pi -e "s!cache_dir:.*\$!cache_dir: '/var/cache/' + ENV['APPCONFIGID'],!" config/boot.rb
+
+    # Don't do this, it has interactive prompts generating the .env.production file
+    # APPCONFIGID=appconfigid_placeholder RAILS_ENV=production bundle exec rake mastodon:setup
 }
 
 package() {
