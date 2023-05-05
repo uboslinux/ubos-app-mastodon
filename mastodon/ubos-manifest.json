@@ -122,7 +122,6 @@
                         "${appconfig.datadir}/mastodon/Rakefile",
                         "${appconfig.datadir}/mastodon/spec",
                         "${appconfig.datadir}/mastodon/streaming",
-                        "${appconfig.datadir}/mastodon/tmp",
                         "${appconfig.datadir}/mastodon/vendor",
                         "${appconfig.datadir}/mastodon/yarn.lock"
                     ],

@@ -124,5 +124,5 @@ package() {
     install -m644 ${startdir}/ubos.rake ${pkgdir}/ubos/share/${pkgname}/mastodon/lib/tasks/ubos.rake
 
 # Remove unnecessary build output files
-    # rm -r $(find ${pkgdir} -name mkmf.log -or -name gem_make.out -or -name gem.build_complete -or -name .git -or -name .cache) ${pkgdir}/ubos/share/mastodon/mastodon/tmp
+    rm -r $(find ${pkgdir} -name mkmf.log -or -name gem_make.out -or -name .git -or -name .cache ) ${pkgdir}/ubos/share/mastodon/mastodon/tmp
 }
