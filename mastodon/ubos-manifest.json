@@ -202,12 +202,11 @@
         "postgresql" : {
             "appconfigitems" : [
                 {
-                    "type"              : "database",
-                    "name"              : "maindb",
-                    "retentionpolicy"   : "keep",
-                    "retentionbucket"   : "maindb",
-                    "defaultprivileges" : "all privileges",
-                    "privileges"        : "create"
+                    "type"            : "database",
+                    "name"            : "maindb",
+                    "retentionpolicy" : "keep",
+                    "retentionbucket" : "maindb",
+                    "privileges"      : "all privileges"
                 }
             ],
             "installers" : [
