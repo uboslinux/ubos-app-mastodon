@@ -1,3 +1,5 @@
+# See also Mastodon in AUR
+
 developer=https://github.com/mastodon/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
@@ -20,18 +22,19 @@ depends=(
     'libyaml'
     'nodejs'
     'postgresql'
+    'protobuf'
     'redis'
     'ruby-bundler'
-    'protobuf'
     'zlib'
 )
 makedepends=(
     'gcc'
+    'git'
+    'make'
     'nvm'
     'npm'
-    'yarn'
-    'git'
     'python'
+    'yarn'
 )
 options=('!strip')
 install=install
@@ -40,7 +43,7 @@ sha512sums=('c594178010c296b581531d6e35887214441d6f1f44083578dbb38a3beeb64d968a1
 # Use NVM
 # Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
 # you get some error message about "not compatible ... 'prefix' option" (don't ask me)
-NODE_VERSION="--lts=gallium"
+NODE_VERSION="--lts=iron"
 
 prepare() {
     export NVM_DIR=${srcdir}/${pkgname}-${pkgver}/nvm
@@ -52,19 +55,18 @@ prepare() {
 
     corepack enable
     yarn set version classic
-
-    echo "gem 'psych', '< 4'" >> Gemfile
 }
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
 
+    sed -i '/husky install/d' package.json # Stop husky from hijacking git hooks
+
     export NVM_DIR=$(pwd)/nvm
 
     bundle config set --local path 'vendor/bundle'
-    # bundle config set deployment 'true'
-    bundle config unset deployment
-    bundle config set without 'development test'
+    bundle config deployment 'true'
+    bundle config without 'development test'
     bundle install -j$(getconf _NPROCESSORS_ONLN)
 
     yarn install --pure-lockfile
