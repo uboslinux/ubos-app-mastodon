@@ -2,9 +2,9 @@ developer=https://github.com/mastodon/mastodon
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=4.1.2
+pkgver=4.2.5
 # When updating this, also update the node version in mastodon-streaming@.service
-pkgrel=2
+pkgrel=1
 pkgdesc="Your self-hosted, globally interconnected microblogging community"
 arch=('any')
 license=("AGPL3")
@@ -35,7 +35,7 @@ makedepends=(
 )
 options=('!strip')
 install=install
-sha512sums=('2df4ecae7164c25dcd114ddfc63171427a250eb53f530736640086050ec2abd6af6fa599f4de8f1da327f5b6b4c324fb75e81b079d45fcb1eb81bd4f5eb077ec')
+sha512sums=('c594178010c296b581531d6e35887214441d6f1f44083578dbb38a3beeb64d968a171cba0a9335e8f8b27b45e957508ab3168ec0056b423bf8fb44abd0f5f6d5')
 
 # Use NVM
 # Note: NVM_DIR must be an absolute path name without a trailing slash, otherwise
