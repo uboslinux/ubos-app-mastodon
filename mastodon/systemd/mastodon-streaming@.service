@@ -11,7 +11,7 @@ User=mastodon
 WorkingDirectory=/ubos/lib/mastodon/%i/mastodon
 EnvironmentFile=/etc/mastodon/mastodon-streaming-%i.env
 # Run the node version that we used: this probably breaks when there are minor version upgrades
-ExecStart=/ubos/share/mastodon/mastodon/nvm/versions/node/v20.11.0/bin/node /ubos/lib/mastodon/%i/mastodon/streaming
+ExecStart=/ubos/share/mastodon/mastodon/nvm/versions/node/v20.11.1/bin/node /ubos/lib/mastodon/%i/mastodon/streaming
 TimeoutSec=15
 Restart=always
 # Proc filesystem

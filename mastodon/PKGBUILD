@@ -6,7 +6,7 @@ maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=4.2.5
 # When updating this, also update the node version in mastodon-streaming@.service
-pkgrel=1
+pkgrel=2
 pkgdesc="Your self-hosted, globally interconnected microblogging community"
 arch=('any')
 license=("AGPL3")
