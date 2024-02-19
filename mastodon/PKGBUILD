@@ -6,7 +6,7 @@ maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=4.2.5
 # When updating this, also update the node version in mastodon-streaming@.service
-pkgrel=2
+pkgrel=3
 pkgdesc="Your self-hosted, globally interconnected microblogging community"
 arch=('any')
 license=("AGPL3")
@@ -69,7 +69,7 @@ build() {
     bundle config without 'development test'
     bundle install -j$(getconf _NPROCESSORS_ONLN)
 
-    yarn install --pure-lockfile
+    yarn --max-old-space-size=6000 install --pure-lockfile
 
     # We need this here otherwise asset precompilation fails. However, we need to
     # change this before deploying to something instance-specific
@@ -82,6 +82,7 @@ build() {
     RAILS_SERVE_STATIC_FILES=true \
     OTP_SECRET=precompile_placeholder \
     SECRET_KEY_BASE=precompile_placeholder \
+    NODE_OPTIONS=--max-old-space-size=6000 \
     bundle exec rails assets:precompile
 
     # Those OTP_SECRET and SECRET_KEY_BASE are from the Dockerfile
