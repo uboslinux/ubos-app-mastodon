@@ -53,7 +53,7 @@ prepare() {
     cd ${srcdir}/${pkgname}-${pkgver}
 
     corepack enable < /dev/null # This may ask an interactive question
-    yarn set version classic
+    yarn set version classic < /dev/null
 }
 
 build() {
