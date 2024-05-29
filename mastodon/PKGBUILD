@@ -52,7 +52,7 @@ prepare() {
 
     cd ${srcdir}/${pkgname}-${pkgver}
 
-    corepack enable
+    corepack enable < /dev/null # This may ask an interactive question
     yarn set version classic
 }
 
