@@ -5,7 +5,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=4.2.8
-pkgrel=2
+pkgrel=3
 pkgdesc="Your self-hosted, globally interconnected microblogging community"
 arch=('any')
 license=("AGPL3")
@@ -126,7 +126,7 @@ package() {
     install -m644 ${startdir}/ubos.rake ${pkgdir}/ubos/share/${pkgname}/mastodon/lib/tasks/ubos.rake
 
 # So we can avoid hardcoding node paths
-    ln -s ${pkgdir}/ubos/share/${pkgname}/mastodon/nvm/versions/node/v* ${pkgdir}/ubos/share/${pkgname}/mastodon/nvm/versions/node/current
+    ( cd ${pkgdir}/ubos/share/${pkgname}/mastodon/nvm/versions/node; ln -s v* current )
 
 # Remove unnecessary build output files
     rm -r $(find ${pkgdir} -name mkmf.log -or -name gem_make.out -or -name .git -or -name .cache ) ${pkgdir}/ubos/share/mastodon/mastodon/tmp
